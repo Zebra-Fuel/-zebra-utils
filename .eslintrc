@@ -1,0 +1,13 @@
+{
+    "extends": [
+        "react-app",
+        "airbnb",
+        "eslint:recommended",
+        "plugin:react/recommended",
+        "plugin:prettier/recommended",
+        "plugin:jsx-a11y/recommended"
+    ],
+    "plugins": ["prettier", "jsx-a11y"],
+    "parser": "babel-eslint",
+    "rules": { "import/no-unresolved": "off" }
+}
