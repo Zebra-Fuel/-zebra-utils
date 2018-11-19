@@ -36,7 +36,7 @@ function setupPolly(recordingName, mode = '') {
     const intercepted = {};
     const extraPromises = [];
     let lastCall;
-    let pendingRequests = 0;
+    let pendingRequests = Number.MAX_SAFE_INTEGER;
 
     const polly = new core.Polly(
         _.camelCase(
@@ -81,9 +81,9 @@ function setupPolly(recordingName, mode = '') {
         value: async function() {
             const milliseconds = process.env.REACT_DEVTOOLS ? 1000 : 0;
             await new Promise(r => setTimeout(r, milliseconds));
-            await Promise.all(extraPromises);
+            pendingRequests = Number.MAX_SAFE_INTEGER;
             while (pendingRequests > 0) {
-                // wait also for requests generated after the initial requests are resolved
+                await Promise.all(extraPromises);
                 pendingRequests = 0;
                 await flush.call(this);
                 await new Promise(r => setTimeout(r, milliseconds));

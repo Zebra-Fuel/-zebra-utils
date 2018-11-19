@@ -1,5 +1,0 @@
-{
-  "hooks": {
-    "pre-push": "yarn build && git reset && git add index.js && git commit --amend --no-edit"
-  }
-}
