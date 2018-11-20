@@ -88,10 +88,10 @@ export function setupPolly(recordingName, mode = '') {
         value: async (app, enzymeSelector, times = 3) => {
             while (times >= 0) {
                 times -= 1;
+                await polly.flush();
                 app.update();
                 const wrapper = app.find(enzymeSelector);
                 if (wrapper.exists()) return wrapper;
-                await polly.flush();
             }
             throw new Error(`Expected "${enzymeSelector}" to exist.`);
         },
