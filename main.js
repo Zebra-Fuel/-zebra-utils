@@ -93,7 +93,7 @@ export function setupPolly(recordingName, mode = '') {
                 const wrapper = app.find(enzymeSelector);
                 if (wrapper.exists()) return wrapper;
             }
-            throw new Error(`Expected "${enzymeSelector}" to exist.`);
+            throw `Expected "${enzymeSelector}" to exist.`;
         },
     });
     Object.defineProperty(polly, 'addExtraPromise', { value: v => extraPromises.push(v) });
