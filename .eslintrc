@@ -5,9 +5,29 @@
         "eslint:recommended",
         "plugin:react/recommended",
         "plugin:prettier/recommended",
-        "plugin:jsx-a11y/recommended"
+        "plugin:jsx-a11y/recommended",
+        "plugin:node/recommended",
+        "plugin:lodash/recommended",
+        "plugin:jest/recommended",
+        "plugin:jest/style"
     ],
-    "plugins": ["prettier", "jsx-a11y"],
+    "plugins": ["jest", "jsx-a11y", "lodash", "node", "prettier"],
     "parser": "babel-eslint",
-    "rules": { "import/no-unresolved": "off" }
+    "rules": {
+        "import/no-unresolved": "off",
+        "lodash/prefer-constant": "off",
+        "lodash/prefer-lodash-method": "off",
+        "node/no-missing-require": "off",
+        "node/no-unsupported-features/es-builtins": [
+            "error",
+            {
+                "version": ">=8.0.0",
+                "ignores": []
+            }
+        ],
+        "node/no-unsupported-features/es-syntax": ["error", {
+            "version": ">=8.0.0",
+            "ignores": []
+        }]
+    }
 }
