@@ -12,7 +12,6 @@
         "plugin:jest/style"
     ],
     "plugins": ["jest", "jsx-a11y", "lodash", "node", "prettier"],
-    "parser": "babel-eslint",
     "rules": {
         "import/no-unresolved": "off",
         "lodash/prefer-constant": "off",

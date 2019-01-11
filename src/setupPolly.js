@@ -1,4 +1,5 @@
 const _camelCase = require('lodash/camelCase');
+const _isString = require('lodash/isString');
 const { Polly } = require('@pollyjs/core');
 const { MODES } = require('@pollyjs/utils');
 
@@ -34,15 +35,19 @@ function setupPolly(recordingName, mode = '') {
     polly.server.delete('*').intercept((__, res) => res.sendStatus(204));
     polly.server.put('*').intercept((__, res) => res.sendStatus(204));
     polly.server.post('*').intercept((req, res, interceptor) => {
-        const { query } = JSON.parse(req.body);
-        const queryName = query && Object.keys(intercepted).find(v => query.startsWith(v));
-        if (queryName) {
-            const [json, status = 200] = intercepted[queryName];
-            res.status(status).json(json);
-        } else if (query && query.startsWith('query ')) {
-            interceptor.abort();
-        } else {
+        if (!_isString(req.body)) {
             res.sendStatus(204);
+        } else {
+            const { query } = JSON.parse(req.body);
+            const queryName = query && Object.keys(intercepted).find(v => query.startsWith(v));
+            if (queryName) {
+                const [json, status = 200] = intercepted[queryName];
+                res.status(status).json(json);
+            } else if (query && query.startsWith('query ')) {
+                interceptor.abort();
+            } else {
+                res.sendStatus(204);
+            }
         }
     });
 

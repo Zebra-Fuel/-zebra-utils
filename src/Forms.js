@@ -16,44 +16,54 @@ const findDropdown = (app, enzymeSelector) => {
 };
 
 class Forms {
-    static changeFields = formFields => props =>
-        Object.entries(formFields).forEach(([name, value]) =>
-            Forms.simulateChange(value, { name })(props),
-        );
+    static changeFields(formFields) {
+        return props =>
+            Object.entries(formFields).forEach(([name, value]) =>
+                Forms.simulateChange(value, { name })(props),
+            );
+    }
 
-    static simulateChange = (value, enzymeSelector) => ({ app }) => {
-        const input = findEditableField(app, enzymeSelector);
-        if (input.exists()) {
-            const target = input.instance();
-            target.value = value;
-            const clock = sinon.useFakeTimers(Date.now());
-            input.simulate('change', { target });
-            clock.runAll(); // use sinon to fast-forward timeout for debounced fields
-            clock.restore();
-        } else {
-            findDropdown(app, enzymeSelector)
-                .find(`DropdownItem[text="${value}"]`)
+    static simulateChange(value, enzymeSelector) {
+        return ({ app }) => {
+            const input = findEditableField(app, enzymeSelector);
+            if (input.exists()) {
+                const target = input.instance();
+                target.value = value;
+                const clock = sinon.useFakeTimers(Date.now());
+                input.simulate('change', { target });
+                clock.runAll(); // use sinon to fast-forward timeout for debounced fields
+                clock.restore();
+            } else {
+                findDropdown(app, enzymeSelector)
+                    .find(`DropdownItem[text="${value}"]`)
+                    .simulate('click');
+            }
+        };
+    }
+
+    static clickButton(button, section) {
+        return ({ app }) => {
+            const wrapper = section ? app.find(section) : app;
+            wrapper
+                .find(Button)
+                .filter(button)
+                .filterWhere(notHidden)
+                .first()
                 .simulate('click');
-        }
-    };
+        };
+    }
 
-    static clickButton = (button, section) => ({ app }) => {
-        const wrapper = section ? app.find(section) : app;
-        wrapper
-            .find(Button)
-            .filter(button)
-            .filterWhere(notHidden)
-            .first()
-            .simulate('click');
-    };
+    static selectAddress(value) {
+        return props => {
+            Forms.simulateChange(value, 'PlacesAutocomplete input.search')(props);
+            props.app.update();
+            Forms.simulateChange(value, 'PlacesAutocomplete [role="combobox"]')(props);
+        };
+    }
 
-    static selectAddress = value => props => {
-        Forms.simulateChange(value, 'PlacesAutocomplete input.search')(props);
-        props.app.update();
-        Forms.simulateChange(value, 'PlacesAutocomplete [role="combobox"]')(props);
-    };
-
-    static submitForm = () => ({ app }) => app.find('form').simulate('submit');
+    static submitForm() {
+        return ({ app }) => app.find('form').simulate('submit');
+    }
 }
 
 module.exports = Forms;
