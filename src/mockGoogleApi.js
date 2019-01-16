@@ -1,12 +1,13 @@
-function mockGoogleApi(address, lng, lat) {
+function mockGoogleApi(formatted_address, lat, lng) {
     const location = {
-        lng: jest.fn(() => lng),
         lat: jest.fn(() => lat),
+        lng: jest.fn(() => lng),
     };
     const getPlacePredictions = jest.fn((_, autocompleteCallback) =>
-        autocompleteCallback([{ structured_formatting: {}, description: address }]),
+        autocompleteCallback([{ structured_formatting: {}, description: formatted_address }]),
     );
-    const geocode = jest.fn((_, callback) => callback([{ geometry: { location } }]));
+    const response = lat != null ? [[{ geometry: { location } }]] : [[{ formatted_address }], 'OK']
+    const geocode = jest.fn((_, callback) => callback(...response));
     return {
         maps: {
             GeocoderStatus: {},
