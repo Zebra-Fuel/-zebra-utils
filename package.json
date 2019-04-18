@@ -31,8 +31,8 @@
         "@pollyjs/core": "^1.2.0",
         "@pollyjs/persister-fs": "^1.2.0",
         "@pollyjs/utils": "^1.2.0",
-        "lodash": "^4.17.11",
-        "semantic-ui-react": "^0.83.0",
-        "sinon": "^7.1.1"
+        "lodash": "4.x.x",
+        "semantic-ui-react": "0.x.x",
+        "sinon": "7.x.x"
     }
 }
