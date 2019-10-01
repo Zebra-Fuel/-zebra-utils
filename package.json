@@ -4,10 +4,10 @@
     "main": "./Forms.js",
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/Zebra-Fuel/frontend-utils.git",
-        "bin": {
-            "validate-envs": "./validate-envs.js"
-        }
+        "url": "git+https://github.com/Zebra-Fuel/frontend-utils.git"
+    },
+    "bin": {
+        "validate-envs": "./validate-envs.js"
     },
     "devDependencies": {
         "babel-eslint": "^9.0.0",
