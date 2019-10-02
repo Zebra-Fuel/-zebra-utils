@@ -1,4 +1,4 @@
-import * as Sentry from '@sentry/browser';
+const Sentry = require('@sentry/browser');
 
 const { REACT_APP_VERSION = 'unknown' } = process.env;
 
@@ -19,4 +19,4 @@ const config = configuration => {
 
 const configScope = data => Sentry.configureScope(scope => scope.setUser(data));
 
-export default { config, configScope };
+module.exports = { config, configScope };
