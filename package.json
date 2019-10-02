@@ -7,7 +7,8 @@
         "url": "git+https://github.com/Zebra-Fuel/frontend-utils.git"
     },
     "bin": {
-        "validate-envs": "bin/validate-envs.js"
+        "validate-envs": "bin/validate-envs.js",
+        "deploy-sentry": "bin/deploy-sentry.js"
     },
     "devDependencies": {
         "babel-eslint": "^9.0.0",
