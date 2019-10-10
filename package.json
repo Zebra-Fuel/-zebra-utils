@@ -11,7 +11,7 @@
         "deploy-sentry": "bin/deploy-sentry.js"
     },
     "devDependencies": {
-        "@babel/core": "^7.6.3",
+        "@babel/core": "^7.6.4",
         "@babel/preset-env": "^7.6.3",
         "babel-eslint": "^9.0.0",
         "babel-loader": "^8.0.6",
@@ -28,11 +28,15 @@
         "eslint-plugin-node": "^8.0.1",
         "eslint-plugin-prettier": "^3.0.1",
         "eslint-plugin-react": "^7.12.4",
+        "gulp": "^4.0.2",
+        "gulp-babel": "^8.0.0",
+        "gulp-uglify": "^3.0.2",
         "husky": "^1.3.1",
         "prettier": "^1.16.4"
     },
     "scripts": {
-        "lint": "eslint ."
+        "lint": "eslint .",
+        "build:sentry": "gulp sentry"
     },
     "peerDependencies": {
         "@pollyjs/core": "^1.2.0",

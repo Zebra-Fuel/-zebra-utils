@@ -1,16 +1,15 @@
+/* eslint-disable node/no-unsupported-features/es-syntax */
 const Sentry = require('@sentry/browser');
 
-const { REACT_APP_VERSION = 'unknown' } = process.env;
-
-// eslint-disable-next-line node/no-unsupported-features/es-syntax
-export const config = configuration => {
-    if (configuration.SENTRY_URL) {
+export const config = ({ SENTRY_URL, ENV, REACT_APP_VERSION = 'unknown' }) => {
+    if (SENTRY_URL) {
         // eslint-disable-next-line no-console
         console.info(`Setting up Sentry (${REACT_APP_VERSION})...`);
         Sentry.init({
-            dns: configuration.SENTRY_URL,
+            dsn: SENTRY_URL,
+            maxBreadcrumbs: 50,
             release: REACT_APP_VERSION,
-            environment: configuration.ENV,
+            environment: ENV,
         });
     } else {
         // eslint-disable-next-line no-console
@@ -18,5 +17,6 @@ export const config = configuration => {
     }
 };
 
-// eslint-disable-next-line node/no-unsupported-features/es-syntax
 export const configScope = data => Sentry.configureScope(scope => scope.setUser(data));
+
+export const sdk = Sentry;
